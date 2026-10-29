@@ -31,7 +31,6 @@ public class CardDeliveryTest {
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
         SelenideElement dateInput = $("[data-test-id='date'] input");
-        dateInput.sendKeys(Keys.END);
         dateInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME));
         dateInput.sendKeys(Keys.BACK_SPACE);
         dateInput.sendKeys(deliveryDate);
@@ -50,8 +49,9 @@ public class CardDeliveryTest {
                 .click();
 
         $("[data-test-id='notification']")
-                .should(visible, Duration.ofSeconds(20))
-                .shouldHave(text("Успешно!"));
+                .should(visible, Duration.ofSeconds(15))
+                .shouldHave(text("Успешно!"))
+                .shouldHave(text("Встреча успешно забронирована на " + deliveryDate));
 
 
     }
