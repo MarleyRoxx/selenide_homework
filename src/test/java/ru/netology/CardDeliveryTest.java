@@ -31,7 +31,6 @@ public class CardDeliveryTest {
                 .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
         SelenideElement dateInput = $("[data-test-id='date'] input");
-
         dateInput.sendKeys(Keys.END);
         dateInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME));
         dateInput.sendKeys(Keys.BACK_SPACE);
