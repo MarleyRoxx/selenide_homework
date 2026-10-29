@@ -23,33 +23,36 @@ public class CardDeliveryTest {
         Selenide.open("http://localhost:9999");
         SelenideElement form = $("form");
 
-        form.$("[data-test-id='city'] input").setValue("Кемерово");
+        form.$("[data-test-id='city'] input")
+                .setValue("Кемерово");
 
-        String deliveryDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        String deliveryDate = LocalDate.now()
+                .plusDays(3)
+                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
         SelenideElement dateInput = $("[data-test-id='date'] input");
-        dateInput.click();
-        Keys modifier = System.getProperty("os.name")
-                .toLowerCase()
-                .contains("mac")
-                ? Keys.COMMAND
-                : Keys.CONTROL;
-        dateInput.sendKeys(Keys.chord(modifier, "A"));
+
+        dateInput.sendKeys(Keys.END);
+        dateInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME));
         dateInput.sendKeys(Keys.BACK_SPACE);
         dateInput.sendKeys(deliveryDate);
 
-        form.$("[data-test-id='name'] input").setValue("Герасимова Екатерина");
+        form.$("[data-test-id='name'] input")
+                .setValue("Герасимова Екатерина");
 
-        form.$("[data-test-id='phone'] input").setValue("+79950659050");
+        form.$("[data-test-id='phone'] input")
+                .setValue("+79950659050");
 
-        form.$("[data-test-id='agreement']").click();
+        form.$("[data-test-id='agreement']")
+                .click();
 
         form.$$("button")
                 .findBy(text("Забронировать"))
-                .shouldBe(visible)
-                .shouldBe(enabled)
                 .click();
 
-        $("[data-test-id='notification']").should(visible, Duration.ofSeconds(20));
+        $("[data-test-id='notification']")
+                .should(visible, Duration.ofSeconds(20))
+                .shouldHave(text("Успешно!"));
 
 
     }
